@@ -2,19 +2,23 @@
  Java Based Linear Algebra Library
  Ctrix v4
  Alex
- 12/11/2014
+ 31/10/2015
 */
 
-package ctrix_4;	//PACKAGE NAME
+package ctrix_4;	
 
-import callback.*;
+import java.util.ArrayList;
 
-public class Ctrix {	//CLASS NAME
-	
+import ctrix_4.callback.*;
+
+public class Ctrix implements CtrixDisplay 
+{	
 	private int Number_of_Rows;	//NUMBER OF ROWS IN 2D ARRAY
 	private int Number_of_Columns;	//NUMBER OF COLUMNS IN 2D ARRAY
 	private double Elements[][];	//2D ARRAY OF DOUBLE WHICH STORES THE ELEMENTS OF THE MATRIX
-		
+	
+	private static ArrayList<Object> CallBackListenerList;
+	
 	public Ctrix()	//CONSTRUCTOR
 	{
 		Number_of_Rows=-1;	//SET INITIALLY TO -1 TO INDICATE EMPTY 2D ARRAY(MATRIX)
@@ -23,7 +27,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public Ctrix(int Number_of_Rows,int Number_of_Columns)	//CONSTRUCTOR
 	{
-		try{
+		try
+		{
 			if((Number_of_Rows==0)||(Number_of_Columns==0))	//IF ANY VALUE ZERO THROW EXCEPTION
 			{
 				throw new CtrixException("Array dimensions can't be zero. One of the array dimension is zero.");	//THROW EXCEPTION SPECIFYING THE ERROR
@@ -33,7 +38,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -44,7 +49,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public Ctrix(int Number_of_Rows,int Number_of_Columns,int ...Elements)	//CONSTRUCTOR
 	{
-		try{
+		try
+		{
 			if((Number_of_Rows==0)||(Number_of_Columns==0))	//IF ANY VALUE ZERO THROW EXCEPTION
 			{
 				throw new CtrixException("Array dimensions can't be zero. One of the array dimension is zero.");	//THROW EXCEPTION SPECIFYING THE ERROR
@@ -54,7 +60,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -87,16 +93,18 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(1);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 	}
 	
 	public Ctrix(double Elements[][])	//CONSTRUCTOR
 	{
-		int Number_of_Columns_temp=Elements[0].length;	//CHECK IF NUMBER OF COLUMNS OF 2D ARRAY ARE SAME FOR ALL ROWS.
+		int Number_of_Columns_temp=Elements[0].length;	
 		
-		try{
+		//CHECK IF NUMBER OF COLUMNS OF 2D ARRAY ARE SAME FOR ALL ROWS.
+		try
+		{
 			for(int count_0=0;count_0<Elements.length;count_0++)
 			{
 				if(Number_of_Columns_temp != Elements[count_0].length)
@@ -108,7 +116,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(2);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(2);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -119,7 +127,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public void setElement(int RowValue,int ColumnValue,double ElementValue)	//SET VALUE OF A PARTICULAR ELEMENT
 	{
-		try{
+		try
+		{
 			if((RowValue>=Number_of_Rows)||(ColumnValue>=Number_of_Columns))	//CHECK IF REQUIRED ELEMENT LOCATION IS PRESENT
 			{
 				throw new CtrixException("Array index out of Bounds.");	//IF NOT THROW EXCEPTION
@@ -128,7 +137,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(3);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(3);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -137,7 +146,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public void setEntireRow(int RowValue,double[] ElementValue)	//SET VALUE OF A PARTICULAR ROW OF ELEMENTS
 	{
-		try{
+		try
+		{
 			if(ElementValue.length>=Number_of_Columns)		//CHECK IF REQUIRED ROW OF ELEMENT IS PRESENT
 			{
 				throw new CtrixException("Number of Columns exceeds required value.");		//IF NOT THROW EXCEPTION
@@ -146,7 +156,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(4);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(4);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -155,7 +165,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public void setEntireColumn(int ColumnValue,double[][] ElementValue)		//SET VALUE OF A PARTICULAR COLUMN OF ELEMENTS
 	{
-		try{
+		try
+		{
 			if(ElementValue.length >= Number_of_Rows)	//CHECK IF REQUIRED ROW OF ELEMENT IS PRESENT
 			{
 				throw new CtrixException("Number of Rows exceeds required value.");	//IF NOT THROW EXCEPTION
@@ -172,7 +183,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(5);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(5);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return;	//OR RETURN BACK
 		}
 		
@@ -184,7 +195,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public double getElement(int RowValue,int ColumnValue)	//RETURN THE REQUIRED ELEMENT FROM THE 2D ARRAY
 	{
-		try{
+		try
+		{
 			if((RowValue>=Number_of_Rows)||(ColumnValue>=Number_of_Columns))	//CHECK IF REQUIRED ELEMENT IS PRESENT
 			{
 				throw new CtrixException("Array index out of Bounds.");	//IF NOT THROW EXCEPTION
@@ -193,7 +205,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(6);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(6);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return 0;	//OR RETURN ZERO
 		}
 		
@@ -202,7 +214,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public double[] getEntireRow(int RowValue)	//RETURN THE REQUIRED ROW OF ELEMENTS FROM THE 2D ARRAY
 	{
-		try{
+		try
+		{
 			if(RowValue>=this.Number_of_Rows)	//CHECK IF REQUIRED ROW OF ELEMENT IS PRESENT
 			{
 				throw new CtrixException("Can't Fetch Row. Array index out of Bounds.");	//IF NOT THROW EXCEPTION
@@ -211,7 +224,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(7);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(7);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Ctrix.Zeros(1, this.Number_of_Columns).getEntireRow(0);	//OR RETURN A ZERO ROW VECTOR 
 		}
 		
@@ -220,7 +233,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public double[][] getEntireColumn(int ColumnValue)	//RETURN THE REQUIRED COLUMN OF ELEMENTS FROM THE 2D ARRAY
 	{
-		try{
+		try
+		{
 			if(ColumnValue >= Number_of_Columns)	//CHECK IF REQUIRED COLUMN OF ELEMENTS IS PRESENT
 			{
 				throw new CtrixException("Can't Fetch Column. Array index out of Bounds.");	//IF NOT THROW EXCEPTION
@@ -230,7 +244,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(8);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(8);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Ctrix.Zeros(this.Number_of_Rows(), 1).getEntireColumn(0);		//OR RETURN A ZERO COLUMN VECTOR
 		}
 		
@@ -256,7 +270,8 @@ public class Ctrix {	//CLASS NAME
 
 	public static Ctrix Sum(Ctrix A,Ctrix B )	//CALCULATE THE SUM OF 2 MATRICES
 	{
-		try{
+		try
+		{
 			if((A.Number_of_Rows!=B.Number_of_Rows)||(A.Number_of_Columns!=B.Number_of_Columns))	//CHECK IF THE 2 MATRICES MATCH IN DIMENSIONS
 			{
 				throw new CtrixException("Array Dimension mismatch.");	//IF NOT THROW EXCEPTION
@@ -265,10 +280,9 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(9);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(9);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(A.Number_of_Rows,A.Number_of_Columns);	//OR RETURN A ZERO MATRIX OF THE SAME DIMENSIONS AS THE FIRST MATRIX(A)
 		}	
-		
 		
 		double return_value[][]=new double[A.Number_of_Rows][A.Number_of_Columns];
 		
@@ -286,7 +300,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public static Ctrix Difference(Ctrix A,Ctrix B )	//CALCULATE THE DIFFERENCE OF 2 MATRICES
 	{
-		try{
+		try
+		{
 			if((A.Number_of_Rows!=B.Number_of_Rows)||(A.Number_of_Columns!=B.Number_of_Columns))	//CHECK IF THE 2 MATRICES MATCH IN DIMENSIONS
 			{
 				throw new CtrixException("Array Dimension mismatch.");	//IF NOT THROW EXCEPTION
@@ -295,7 +310,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(10);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(10);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(A.Number_of_Rows,A.Number_of_Columns);	//OR RETURN A ZERO MATRIX OF THE SAME DIMENSIONS AS THE FIRST MATRIX(A)
 		}
 		
@@ -315,7 +330,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public static Ctrix Product(Ctrix A,Ctrix B)	//CALCULATE THE PRODUCT OF 2 MATRICES
 	{
-		try{
+		try
+		{
 			if(A.Number_of_Columns!=B.Number_of_Rows)	//CHECK IF THE 2 MATRICES MATCH IN DIMENSIONS
 			{
 				throw new CtrixException("Matrices can't be multiplied as there is a dimension mismatch.");	//IF NOT THROW EXCEPTION
@@ -324,7 +340,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(A.Number_of_Rows,A.Number_of_Columns);	//OR RETURN A ZERO MATRIX OF THE SAME DIMENSIONS AS THE FIRST MATRIX(A)
 		}
 		
@@ -350,7 +366,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public static Ctrix MultiplyElementByElement(Ctrix A,Ctrix B )	//CALCULATE THE PRODUCT OF INDIVIDUAL ELEMENTS OF 2 MATRICES
 	{
-		try{
+		try
+		{
 			if((A.Number_of_Rows!=B.Number_of_Rows)||(A.Number_of_Columns!=B.Number_of_Columns))	//CHECK IF THE 2 MATRICES MATCH IN DIMENSIONS
 			{
 				throw new CtrixException("Array Dimension mismatch.");	//IF NOT THROW EXCEPTION
@@ -359,7 +376,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(A.Number_of_Rows,A.Number_of_Columns);	//OR RETURN A ZERO MATRIX OF THE SAME DIMENSIONS AS THE FIRST MATRIX(A)
 		}
 		
@@ -392,7 +409,72 @@ public class Ctrix {	//CLASS NAME
 		return new Ctrix(return_value);	//RETURN PRODUCT OF INPUT SCALAR AND INPUT MATRIX AS ANOTHER MATRIX
 	}
 	
-	public Ctrix CallBack(CallBackInterface InterfaceInstance)	//PERFORM CALLBACK OF FUNCTION OF THE ELEMENTS OF THE MATRIX
+	public static void AddCallBackListener(Object input)
+	{
+		if(CallBackListenerList==null)
+		{
+			CallBackListenerList=new ArrayList<Object>();
+		}
+		
+		CallBackListenerList.add(input);
+	}
+	
+	public static void RemoveCallBackListener(int index)
+	{
+		try
+		{
+			if(CallBackListenerList!=null)
+			{
+				CallBackListenerList.remove(index);
+			}
+			else
+			{
+				throw new CtrixException("CallBackListenerList is Empty");	//IF NOT THROW EXCEPTION
+			}
+		}
+		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
+		{
+			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
+			//System.exit(16);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+		}
+	}
+	
+	public Ctrix CallBack(int index)
+	{
+		try
+		{
+			if(CallBackListenerList!=null)
+			{
+				Object CallBackListener = CallBackListenerList.get(index);
+				
+				if(CallBackListener instanceof CallBackAbsolute)
+				{
+					return CallBack((CallBackAbsolute)CallBackListener);
+				}
+				else if(CallBackListener instanceof CallBackRelative)
+				{
+					return CallBack((CallBackRelative)CallBackListener);
+				}
+				else
+				{
+					
+				}
+			}
+			else
+			{
+				throw new CtrixException("CallBackListenerList is Empty");	//IF NOT THROW EXCEPTION
+			}
+		}
+		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
+		{
+			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
+			//System.exit(16);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+		}
+		
+		return null;
+	}
+	
+	public Ctrix CallBack(CallBackAbsolute InterfaceInstance)	//PERFORM CALLBACK OF FUNCTION OF THE ELEMENTS OF THE MATRIX
 	{
 		double return_value[][]=new double[this.Number_of_Rows][this.Number_of_Columns];
 		
@@ -404,7 +486,12 @@ public class Ctrix {	//CLASS NAME
 			}
 		}
 		
-		return new Ctrix(return_value);	//RETURNS COMPUTER VALUE AS AN ARRAY
+		return new Ctrix(return_value);	//RETURNS COMPUTED VALUE AS AN ARRAY
+	}
+	
+	public Ctrix CallBack(CallBackRelative InterfaceInstance)
+	{
+		return InterfaceInstance.CallBackMethod(this);
 	}
 	
 	public Ctrix Transpose()	//FIND TRANSPOSE OF THE MATRIX
@@ -424,7 +511,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public Ctrix SubCtrix(int LeaveOutRowNumber, int LeaveOutColumnNumber)	//RETURNS A SUB MATRIX OF THE MATRIX LEAVING OUT THE MENTIONED ROW AND COLUMN
 	{
-		try{
+		try
+		{
 			if((LeaveOutRowNumber>=Number_of_Rows)||(LeaveOutColumnNumber>=Number_of_Columns))	//CHECK IF THE REQUIRED ROW AND COLUMN IS PRESENT
 			{
 				throw new CtrixException("Array index out of Bounds.");	//IF NOT THROW EXCEPTION
@@ -433,7 +521,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(11);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros((this.Number_of_Rows-1),(this.Number_of_Columns-1));	//OR RETURN A ZERO MATRIX
 		}
 		
@@ -466,7 +554,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public double Det()	//COMPUTE THE DETERMINANT OF THE MATRIX
 	{
-		try{
+		try
+		{
 			if(this.Number_of_Columns!=this.Number_of_Rows)	//CHECK IF THE MATRIX IS A SQUARE MATRIX
 			{
 				throw new CtrixException("Matrix is not a square Matrix.");	//IF NOT THROW EXCEPTION
@@ -475,7 +564,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(12);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(12);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return 4.9E-324;	//OR RETURN MINIMUM VALUE OF DOUBLE
 		}
 		
@@ -502,7 +591,8 @@ public class Ctrix {	//CLASS NAME
 
 	protected Ctrix Minor()	//CALCULATE THE MINOR OF THE MATRIX
 	{
-		try{
+		try
+		{
 			if(this.Number_of_Columns!=this.Number_of_Rows)	//CHECK IF THE MATRIX IS A SQUARE MATRIX
 			{
 				throw new CtrixException("Matrix is not a square Matrix.");	//IF NOT THROW EXCEPTION
@@ -511,7 +601,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(13);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(13);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(this.Number_of_Rows,this.Number_of_Columns);	//OR RETURN ZERO MATRIX OF THE SAME DIMENSION AS MATRIX
 		}
 		
@@ -530,7 +620,8 @@ public class Ctrix {	//CLASS NAME
 	
 	protected Ctrix CoFactor()	//CALCULATE THE COFACTOR OF THE MATRIX
 	{
-		try{
+		try
+		{
 			if(this.Number_of_Columns!=this.Number_of_Rows)	//CHECK IF THE MATRIX IS A SQUARE MATRIX
 			{
 				throw new CtrixException("Matrix is not a square Matrix.");	//IF NOT THROW EXCEPTION
@@ -539,7 +630,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)	//CATCH EXCEPTIONS OF THE TYPE CtrixException 
 		{
 			me.printStackTrace();	//PRINT EXCEPTION CAUSE(MESSAGE)
-			System.exit(14);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(14);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros(this.Number_of_Rows,this.Number_of_Columns);	//OR RETURN ZERO MATRIX OF THE SAME DIMENSION AS MATRIX
 		}
 		
@@ -558,7 +649,8 @@ public class Ctrix {	//CLASS NAME
 	
 	public Ctrix Inverse()	//CALCULATE THE INVERSE OF THE MATRIX
 	{	
-		try{
+		try
+		{
 			if(this.Det()==0)
 			{
 				throw new CtrixException("Determinant of Matrix is Zero. Inverse does not exist.");
@@ -567,7 +659,7 @@ public class Ctrix {	//CLASS NAME
 		catch(CtrixException me)
 		{
 			me.printStackTrace();
-			System.exit(15);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
+			//System.exit(15);	//END PROGRAM WITH NON-ZERO VALUE TO INDICATE ERROR
 			//return Zeros((this.Number_of_Rows),(this.Number_of_Columns));	//OR RETURN A ZERO MATRIX 
 		}
 		
@@ -619,14 +711,14 @@ public class Ctrix {	//CLASS NAME
 		{
 			for(int count_1=0;count_1<Number_of_Columns;count_1++)
 			{
-				return_value[count_0][count_1]=1;	//SET VALUE OF ALL ELEMENT AS ZERO
+				return_value[count_0][count_1]=1;	
 			}
 		}
 		
 		return new Ctrix(return_value);	//RETURN A MATRIX OF ONES	
 	}
 	
-	public static Ctrix Random(int Number_of_Rows,int Number_of_Columns)	//RETURNS A MATRIX WITH ALL ELEMENTS HAVING ANY RANDOM VALUE OF THE REQUIRED DIMENSIONS
+	public static Ctrix Random(int Number_of_Rows,int Number_of_Columns)	//RETURNS A MATRIX WITH ALL ELEMENTS HAVING RANDOM VALUES OF THE REQUIRED DIMENSIONS
 	{
 		double return_value[][]=new double[Number_of_Rows][Number_of_Columns];
 		
@@ -634,26 +726,11 @@ public class Ctrix {	//CLASS NAME
 		{
 			for(int count_1=0;count_1<Number_of_Columns;count_1++)
 			{
-				return_value[count_0][count_1]=Math.random();	//SET VALUE OF ALL ELEMENT TO ANY RANDOM VALUE
+				return_value[count_0][count_1]=Math.random();	
 			}
 		}
 		
-		return new Ctrix(return_value);	//RETURN A MATRIX OF ZEROS
-	}
-	
-	public void display()	//METHOD TO DISPLAY A MATRIX
-	{
-		//System.out.print("Number of Rows:"+Number_of_Rows+" Number of Columns:"+Number_of_Columns);
-		System.out.println();
-		for(int count_0=0;count_0<Number_of_Rows;count_0++)
-		{
-			for(int count_1=0;count_1<Number_of_Columns;count_1++)
-			{
-				//System.out.print("<["+count_0+", "+count_1+"]> ");
-				System.out.print(Elements[count_0][count_1]+" ");
-			}
-			System.out.println();
-		}
+		return new Ctrix(return_value);		
 	}
 	
 	/*
@@ -675,25 +752,7 @@ public class Ctrix {	//CLASS NAME
 	public static Ctrix Eye(int OrderOfMatrix)	//ALTERNATE NAME TO Ctrix.Identity()
 	{
 		return Identity(OrderOfMatrix);
-	}
 	//*/
-	
 }
 
-@SuppressWarnings("serial")
-class CtrixException extends Exception	//CUSTOM EXCEPTION CLASS FOR Ctrix
-{
-	/*
-	CtrixException()	//CONSTRUCTOR
-	{
-		super();
-		//DO NOTHING;
-	}
-	//*/
-	
-	CtrixException(String name)	//CONSTRUCTOR
-	{
-		super(name);
-	}
-}
 
